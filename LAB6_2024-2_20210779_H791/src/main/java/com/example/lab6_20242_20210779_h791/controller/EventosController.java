@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.Optional;
-import javax.validation.Valid;
+//import javax.validation.Valid; no lo acepta ni con las dependencias en el pom ni con el proyecto creado con esto
 import org.springframework.validation.BindingResult;
 
 
@@ -16,11 +16,8 @@ import org.springframework.validation.BindingResult;
 public class EventosController {
 
     final EventosRepository eventosRepository;
-    final ArtistasRepository artistasRepository;
-
-    public EventosController(EventosRepository eventosRepository, ArtistasRepository artistasRepository) {
+    public EventosController(EventosRepository eventosRepository) {
         this.eventosRepository = eventosRepository;
-        this.artistasRepository = artistasRepository;
     }
 
     @GetMapping("/listar")
@@ -29,9 +26,12 @@ public class EventosController {
         model.addAttribute("lista_eventos", lista_eventos);
         return "eventos";
     }
-
+    //@ModelAttribute("eventos") @Valid Eventos eventos,
+    //                              BindingResult bindingResult,
+    //                              Model model
+    //no se pudo colocar de esta manera
     @GetMapping("/crear")
-    public String crearEvento(@ModelAttribute("eventos") @Valid Eventos eventos,
+    public String crearEvento(@ModelAttribute("eventos") Eventos eventos,
                               BindingResult bindingResult,
                               Model model) {
         List<Eventos> lista_eventos = eventosRepository.findAll();
@@ -39,9 +39,13 @@ public class EventosController {
         return "editar_evento";
     }
 
-
+    //@ModelAttribute("eventos") @Valid Eventos eventos,
+    //                               BindingResult bindingResult,
+    //                                 Model model,
+    //                                 @RequestParam("eventoId") Integer eventoId
+    //no se pudo colocar de esta manera
     @GetMapping("/editar")
-    public String editarEvento(@ModelAttribute("eventos") @Valid Eventos eventos,
+    public String editarEvento(@ModelAttribute("eventos") Eventos eventos,
                                BindingResult bindingResult,
                                  Model model,
                                  @RequestParam("eventoId") Integer eventoId) {
@@ -55,9 +59,12 @@ public class EventosController {
             return "eventos";
         }
     }
-
+    //@ModelAttribute("eventos") @Valid Eventos eventos,
+    //                                BindingResult bindingResult,
+    //                                RedirectAttributes attr
+    //no se pudo colocar de esta manera
     @PostMapping("/guardar")
-    public String guardarEvento(@ModelAttribute("eventos") @Valid Eventos eventos,
+    public String guardarEvento(@ModelAttribute("eventos") Eventos eventos,
                                 BindingResult bindingResult,
                                 RedirectAttributes attr) {
         if (eventos.getEventoId() == null) {

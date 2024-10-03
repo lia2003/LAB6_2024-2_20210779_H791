@@ -16,7 +16,7 @@ public class Artistas {
     private Integer artistaId;
 
     @NotBlank(message = "El nombre del artista es obligatorio")
-    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    @Size(min = 2, max = 100, message = "El nombre debe tener entre 2 y 100 caracteres")
     @Column(name = "nombre", nullable = false)
     private String nombre;
 

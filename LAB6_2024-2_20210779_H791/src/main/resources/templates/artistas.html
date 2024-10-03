@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Artistas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{inicio.html::division}"></div> <!-- este es el header -->
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Artistas</h2>
+
+    <!-- Botón para crear un nuevo artista -->
+    <div class="mb-3">
+        <a class="btn btn-success" href="/artistas/crear">Crear Nuevo Artista</a>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Nombre</th>
+            <th>Genero</th>
+            <th>Telefono</th>
+            <th>Acciones</th> <!-- Nueva columna para las acciones -->
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="artista, info: ${lista_artistas}">
+            <td th:text="${info.index + 1}" > </td>
+            <td th:text="${artista.nombre}" > </td>
+            <td th:text="${artista.genero}"> </td>
+            <td th:text="${artista.telefono}"> </td>
+            <td>
+                <!-- Botón para editar el artista según su artistaId -->
+                <a class="btn btn-primary" th:href="@{'/artistas/editar?artistaId=' + ${artista.artistaId}}">Editar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
