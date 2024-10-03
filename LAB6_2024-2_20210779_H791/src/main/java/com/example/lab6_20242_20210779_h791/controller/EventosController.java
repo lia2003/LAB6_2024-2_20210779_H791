@@ -7,6 +7,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 import java.util.Optional;
+import javax.validation.Valid;
+import org.springframework.validation.BindingResult;
+
 
 @Controller
 @RequestMapping("/eventos") //es decir todas las rutas empiezan con employee, ES GENERAL
@@ -28,7 +31,9 @@ public class EventosController {
     }
 
     @GetMapping("/crear")
-    public String crearEvento(@ModelAttribute("eventos") Eventos eventos, Model model) {
+    public String crearEvento(@ModelAttribute("eventos") @Valid Eventos eventos,
+                              BindingResult bindingResult,
+                              Model model) {
         List<Eventos> lista_eventos = eventosRepository.findAll();
         model.addAttribute("lista_eventos", lista_eventos);
         return "editar_evento";
@@ -36,7 +41,8 @@ public class EventosController {
 
 
     @GetMapping("/editar")
-    public String editarEvento(@ModelAttribute("eventos") Eventos eventos,
+    public String editarEvento(@ModelAttribute("eventos") @Valid Eventos eventos,
+                               BindingResult bindingResult,
                                  Model model,
                                  @RequestParam("eventoId") Integer eventoId) {
         Optional<Eventos> optionalEventos = eventosRepository.findById(eventoId);
@@ -51,7 +57,8 @@ public class EventosController {
     }
 
     @PostMapping("/guardar")
-    public String guardarEvento(@ModelAttribute("eventos") Eventos eventos,
+    public String guardarEvento(@ModelAttribute("eventos") @Valid Eventos eventos,
+                                BindingResult bindingResult,
                                 RedirectAttributes attr) {
         if (eventos.getEventoId() == null) {
             attr.addFlashAttribute("msg", "Evento creado exitosamente");
