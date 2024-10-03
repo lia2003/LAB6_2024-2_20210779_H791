@@ -12,5 +12,19 @@ import java.util.Optional;
 @RequestMapping("/eventos") //es decir todas las rutas empiezan con employee, ES GENERAL
 public class EventosController {
 
+    final EventosRepository eventosRepository;
+    final ArtistasRepository artistasRepository;
+
+    public EventosController(EventosRepository eventosRepository, ArtistasRepository artistasRepository) {
+        this.eventosRepository = eventosRepository;
+        this.artistasRepository = artistasRepository;
+    }
+
+    @GetMapping("/listar")
+    public String listarEventos(Model model) {
+        List<Eventos> lista_eventos = eventosRepository.findAll();
+        model.addAttribute("lista_eventos", lista_eventos);
+        return "eventos";
+    }
 
 }
