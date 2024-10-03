@@ -46,6 +46,7 @@
     </style>
 </head>
 <body>
+<div th:insert="~{inicio.html::division}"></div> <!-- este es el header -->
     <h2>Formulario Evento</h2>
 
     <form method="post" th:action="@{'/eventos/guardar'}" th:object="${eventos}">
