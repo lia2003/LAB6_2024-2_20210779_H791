@@ -36,7 +36,9 @@ public class EventosController {
 
 
     @GetMapping("/editar")
-    public String editar_agentes(@ModelAttribute("eventos") Eventos eventos, Model model, @RequestParam("eventoId") Integer eventoId) {
+    public String editarEvento(@ModelAttribute("eventos") Eventos eventos,
+                                 Model model,
+                                 @RequestParam("eventoId") Integer eventoId) {
         Optional<Eventos> optionalEventos = eventosRepository.findById(eventoId);
 
         if (optionalEventos.isPresent()) {
@@ -47,5 +49,18 @@ public class EventosController {
             return "eventos";
         }
     }
+
+    @PostMapping("/guardar")
+    public String guardarEvento(@ModelAttribute("eventos") Eventos eventos,
+                                RedirectAttributes attr) {
+        if (eventos.getEventoId() == null) {
+            attr.addFlashAttribute("msg", "Evento creado exitosamente");
+        } else {
+            attr.addFlashAttribute("msg", "Evento actualizado exitosamente");
+        }
+        eventosRepository.save(eventos);
+        return "redirect:/eventos/listar";
+    }
+
 
 }
