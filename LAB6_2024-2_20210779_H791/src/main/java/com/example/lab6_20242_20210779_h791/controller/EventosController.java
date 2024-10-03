@@ -27,4 +27,25 @@ public class EventosController {
         return "eventos";
     }
 
+    @GetMapping("/crear")
+    public String crearEvento(@ModelAttribute("eventos") Eventos eventos, Model model) {
+        List<Eventos> lista_eventos = eventosRepository.findAll();
+        model.addAttribute("lista_eventos", lista_eventos);
+        return "editar_evento";
+    }
+
+
+    @GetMapping("/editar")
+    public String editar_agentes(@ModelAttribute("eventos") Eventos eventos, Model model, @RequestParam("eventoId") Integer eventoId) {
+        Optional<Eventos> optionalEventos = eventosRepository.findById(eventoId);
+
+        if (optionalEventos.isPresent()) {
+            eventos = optionalEventos.get();
+            model.addAttribute("eventos", eventos);
+            return "editar_evento";
+        } else {
+            return "eventos";
+        }
+    }
+
 }
