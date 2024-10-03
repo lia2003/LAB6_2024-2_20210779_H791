@@ -1,9 +1,9 @@
 package com.example.lab6_20242_20210779_h791.entity;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.time.LocalDate;
+import jakarta.validation.constraints.*;
 
 @Getter
 @Setter
@@ -15,12 +15,18 @@ public class Artistas {
     @Column(name = "artistaId", nullable = false)
     private Integer artistaId;
 
-    @Column(name = "nombre")
+    @NotBlank(message = "El nombre del artista es obligatorio")
+    @Size(min = 3, max = 100, message = "El nombre debe tener entre 3 y 100 caracteres")
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column(name = "genero")
+    @NotBlank(message = "El género es obligatorio")
+    @Size(max = 50, message = "El género no debe exceder los 50 caracteres")
+    @Column(name = "genero", nullable = false)
     private String genero;
 
-    @Column(name = "telefono")
+    @NotBlank(message = "El número de teléfono es obligatorio")
+    @Pattern(regexp = "\\d{9}", message = "El teléfono debe tener 9 dígitos")
+    @Column(name = "telefono", nullable = false)
     private String telefono;
 }
